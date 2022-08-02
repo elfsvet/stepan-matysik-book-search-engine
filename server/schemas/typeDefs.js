@@ -16,13 +16,12 @@ type Book {
     _id: ID
     username: String
     email: String
+    bookCount: Int
     savedBooks: [Book]
   }
 
   type Query {
     me: User
-    users: [User]
-    user(username: String!): User
   }
 
   input BookInput {

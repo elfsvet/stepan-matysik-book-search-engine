@@ -20,21 +20,21 @@ const resolvers = {
         },
 
         // get a single user by either their id or their username
-        user: async (parent, { params }) => {
-            return User.findOne({
-                // SELECT * FROM users WHERE _id = '%1' OR username = '%2'
-                $or: [
-                    { _id: params.id },
-                    { username: params.username }
-                ],
-            })
-                .select('-__v -password')
-                .populate('savedBooks')
-        }
+        // user: async (parent, { params }) => {
+        //     return User.findOne({
+        //         // SELECT * FROM users WHERE _id = '%1' OR username = '%2'
+        //         $or: [
+        //             { _id: params },
+        //             { username: params }
+        //         ],
+        //     })
+        //         .select('-__v -password')
+        //         .populate('savedBooks')
+        // }
     },
     Mutation: {
 
-        addUser: async (parent, args) => {
+        addUser: async (parent, args ) => {
             const user = await User.create(args);
             if (!user) {
                 throw new AuthenticationError('Something is wrong!');
@@ -60,7 +60,7 @@ const resolvers = {
             return { token, user };
         },
 
-        saveBook: async (parent, {bookData}, context) => {
+        saveBook: async (parent, { bookData }, context) => {
             if (context.user) {
                 const updatedUser = await User.findOneAndUpdate(
                     { _id: context.user._id },
