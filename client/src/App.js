@@ -11,9 +11,7 @@ function App() {
   const httpLink = createHttpLink({
     uri: '/graphql',
   });
-// When we need to use a specific function that a library provides us, we might not need to use every parameter for that function. Often, we can't omit an unused parameter, because the function is looking for these parameters in a specific order. In this case, we don't need the first parameter offered by setContext(), which stores the current request object in case this function is running after we've initiated a request.
 
-// Because we're not using the first parameter, but we still need to access the second one, we can use an underscore _ to serve as a placeholder for the first parameter.
   const authLink = setContext((_, { headers }) => {
     const token = localStorage.getItem('id_token');
     return {
