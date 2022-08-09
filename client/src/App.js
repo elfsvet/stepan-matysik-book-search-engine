@@ -1,4 +1,5 @@
 import React from 'react';
+// need to import apolloprovider to surrounded the main layout of the page to be children of apollo to be able to use the functionality
 import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -7,11 +8,11 @@ import SavedBooks from './pages/SavedBooks';
 import Navbar from './components/Navbar';
 
 function App() {
-
+  // create a http link to the apollo server
   const httpLink = createHttpLink({
     uri: '/graphql',
   });
-
+  // create authentication link
   const authLink = setContext((_, { headers }) => {
     const token = localStorage.getItem('id_token');
     return {
@@ -21,7 +22,7 @@ function App() {
       },
     };
   });
-
+// create a client with ApolloClient
   const client = new ApolloClient({
     link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
@@ -30,6 +31,7 @@ function App() {
 
 
   return (
+    // surround the layout and provide the props of the apolloClient with link of the authorization with bearer token + /graphql.
     <ApolloProvider client={client} >
     <Router>
       <>

@@ -8,10 +8,13 @@ import {useMutation} from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 
 const LoginForm = () => {
+  // initial state
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
-  const [validated] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
 
+  const [validated] = useState(false);
+
+  const [showAlert, setShowAlert] = useState(false);
+  // create a variable to store the action login from the api
   const [login, {error}] = useMutation(LOGIN_USER);
 
   const handleInputChange = (event) => {
@@ -30,24 +33,20 @@ const LoginForm = () => {
     }
 
     try {
+      // get the data of the login
       const {data} = await login(
         {
           variables: {...userFormData},
         }
       );
-
-      // if (!response) {
-      //   throw new Error('something went wrong!');
-      // }
-
-      // const { token, user } = await response.json();
+      // get the token from the login and authenticate the user
       Auth.login(data.login.token)
-      // Auth.login(token);
+  
     } catch (err) {
       console.error(err);
       setShowAlert(true);
     }
-
+//  set the form to empty. and im not sure about username should be here))))
     setUserFormData({
       username: '',
       email: '',

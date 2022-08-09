@@ -21,7 +21,7 @@ const SearchBooks = () => {
   useEffect(() => {
     return () => saveBookIds(savedBookIds);
   });
-
+  // get the action from the mutation
   const [saveBook, { error }] = useMutation(SAVE_BOOK);
 
   // create method to search for books and set state on form submit
@@ -69,6 +69,7 @@ const SearchBooks = () => {
     }
 
     try {
+      // use the action here to save the book with all the data we clicked.
       const response = await saveBook({
         variables: { bookData: bookToSave}
       });

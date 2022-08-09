@@ -14,7 +14,7 @@ const SignupForm = () => {
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
-
+  // create a variable to store the action add user from the api
   const [addUser, { error }] = useMutation(ADD_USER);
 
   const handleInputChange = (event) => {
@@ -33,18 +33,17 @@ const SignupForm = () => {
     }
 
     try {
-  
-
+      //  get the data once user created with the original state of the user.
       const { data } = await addUser({
         variables: { ...userFormData }
       });
- 
+      // login the user with the token
       Auth.login(data.addUser.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
     }
-
+    // return user form to empty
     setUserFormData({
       username: '',
       email: '',

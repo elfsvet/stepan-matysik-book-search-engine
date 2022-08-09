@@ -10,7 +10,9 @@ import { REMOVE_BOOK } from '../utils/mutations'
 
 const SavedBooks = () => {
 
+  // get the user information using the useQuery it will get data once loaded
   const { loading, data } = useQuery(GET_ME);
+  // added the action from the mutation to remove the book
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
   const userData = data?.me || {};
 
@@ -23,6 +25,7 @@ const SavedBooks = () => {
     }
 
     try {
+      // use the action to remove the book with the id we clicked
       const response = await removeBook({
         variables: { bookId },
       });
@@ -31,7 +34,7 @@ const SavedBooks = () => {
         throw new Error('something went wrong!');
       }
 
-      // upon success, remove book's id from localStorage
+      // upon success, remove book's id from localStorage. The function is from the utils localStorage
       removeBookId(bookId);
     } catch (err) {
       console.error(err);
